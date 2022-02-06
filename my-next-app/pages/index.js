@@ -13,7 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          lucetre vercel app!
+          하이 성훈
         </h1>
 
         <p className={styles.description}>

@@ -1,8 +1,7 @@
-import React from "react"
-import Layout from "../layouts"
+import React from "react";
 
 const NewFeature = () => {
-  return <Layout>This is a page for new feature.</Layout>
-}
+  return <div>This is a page for new feature.</div>;
+};
 
-export default NewFeature
+export default NewFeature;

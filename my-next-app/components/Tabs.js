@@ -1,15 +1,16 @@
-import React from "react"
-import Link from "next/link"
-import { withRouter } from "next/router"
-import { TabHead, TabContainer, TabBody, Tab } from "../styles/styles"
+import React from "react";
+import Link from "next/link";
+import { withRouter } from "next/router";
+import { NewFeature } from "../pages/new";
+import { TabHead, TabContainer, TabBody, Tab } from "../styles/styles";
 
 const Tabs = ({ router }) => {
   const {
-    query: { tab }
-  } = router
+    query: { tab },
+  } = router;
 
-  const isTabOne = tab === "1" || tab == null
-  const isTabTwo = tab === "2"
+  const isTabOne = tab === "1" || tab == null;
+  const isTabTwo = tab === "2";
   return (
     <TabContainer>
       <TabHead>
@@ -25,11 +26,16 @@ const Tabs = ({ router }) => {
         </Tab>
       </TabHead>
       <TabBody>
-        {isTabOne && <React.Fragment>This is tab one content</React.Fragment>}
+        {isTabOne && (
+          <React.Fragment>
+            {/* <NewFeature></NewFeature> */}
+            This is tab one content
+          </React.Fragment>
+        )}
         {isTabTwo && <React.Fragment>This is tab two content</React.Fragment>}
       </TabBody>
     </TabContainer>
-  )
-}
+  );
+};
 
-export default withRouter(Tabs)
+export default withRouter(Tabs);

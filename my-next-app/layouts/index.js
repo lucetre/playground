@@ -22,8 +22,8 @@ const Layout = ({ children }) => {
         <Link href="/">
           <a>Home</a>
         </Link>
-        <Link href="/page-two">
-          <a>Page 2</a>
+        <Link href="/new">
+          <a>New</a>
         </Link>
       </Nav>
       <PageBody>{children}</PageBody>

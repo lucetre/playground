@@ -25,8 +25,8 @@ export const TabHead = styled("div")`
 `
 
 export const TabContainer = styled("div")`
-  width: 30em;
-  height: 30em;
+  width: 100%;
+  height: 100%;
   webkit-box-shadow: -1px 0px 5px 0px rgba(184, 184, 184, 1);
   -moz-box-shadow: -1px 0px 5px 0px rgba(184, 184, 184, 1);
   box-shadow: -1px 0px 5px 0px rgba(184, 184, 184, 1);

@@ -1,15 +1,12 @@
 import React from "react";
-import Tabs from "../components/Tabs";
-import NewFeature from "./new";
+import Tabs from "../components/tabs";
 
-const PageOne = (props) => {
+const MainPage = (props) => {
   return (
     <div>
-      Home
       <Tabs />
-      <NewFeature></NewFeature>
     </div>
   );
 };
 
-export default PageOne;
+export default MainPage;

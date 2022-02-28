@@ -4,4 +4,13 @@ const NewFeature = () => {
   return <div>This is a page for new feature.</div>;
 };
 
-export default NewFeature;
+const NewPage = (props) => {
+  return (
+    <div>
+      <NewFeature />
+    </div>
+  );
+};
+
+export { NewFeature };
+export default NewPage;

@@ -177,7 +177,7 @@ const MusicPlayer = (props) => {
   );
 };
 
-MusicPlayer.getInitialProps = async ctx => {
+async function getPlaylist() {
   let Playlist = [
     { Src: "music-player/music/1.mp3" },
     { Src: "music-player/music/2.mp3" },
@@ -200,9 +200,10 @@ MusicPlayer.getInitialProps = async ctx => {
   for (let i = 0; i < Playlist.length; i++) {
     await getMusicInfo(Playlist, i, i === 0);
   }
-  console.log('DONE - getMusicInfo!');
   return { Playlist };
 }
 
-export { MusicPlayerFeature };
+MusicPlayer.getInitialProps = getPlaylist;
+
+export { MusicPlayerFeature, getPlaylist };
 export default MusicPlayer;

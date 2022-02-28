@@ -34,9 +34,9 @@ const FeatureTabs = ({ router }) => {
       </TabHead>
       <TabBody>
         <React.Fragment>
-          {isTabOne   && <MusicPlayerFeature></MusicPlayerFeature>}
-          {isTabTwo   && <NewFeature></NewFeature>}
-          {isTabThree && <NewFeature></NewFeature>}
+          {/* {isTabOne   && <MusicPlayerFeature />} */}
+          {isTabTwo   && <NewFeature />}
+          {isTabThree && <NewFeature />}
         </React.Fragment>
       </TabBody>
     </TabContainer>

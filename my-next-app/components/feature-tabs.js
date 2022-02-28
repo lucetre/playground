@@ -18,7 +18,7 @@ const FeatureTabs = ({ router }) => {
       <TabHead>
         <Tab selected={isTabOne}>
           <Link href={{ pathname: "/", query: { tab: "1" } }}>
-            <a>Feature #1: Music Player</a>
+            <a>Feature #1: music-player</a>
           </Link>
         </Tab>
         <Tab selected={isTabTwo}>

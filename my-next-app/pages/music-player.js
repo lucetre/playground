@@ -3,7 +3,7 @@ import jsmediatags from "jsmediatags";
 
 function getMusicInfo(Playlist, i, includeCover) {
   return new Promise((resolve, reject) => {
-    new jsmediatags.Reader(`http://localhost:3000/${Playlist[i].Src}`)
+    new jsmediatags.Reader(`https://lucetre.vercel.app/${Playlist[i].Src}`)
       .read({
         onSuccess: (tag) => {
           Playlist[i].Title = tag.tags.title;

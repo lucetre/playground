@@ -18,7 +18,7 @@ const FeatureTabs = ({ router }) => {
       <TabHead>
         <Tab selected={isTabOne}>
           <Link href={{ pathname: "/", query: { tab: "1" } }}>
-            <a>Feature #1: Music Player</a>
+            <a>Feature #1: music-player</a>
           </Link>
         </Tab>
         <Tab selected={isTabTwo}>
@@ -34,9 +34,9 @@ const FeatureTabs = ({ router }) => {
       </TabHead>
       <TabBody>
         <React.Fragment>
-          {isTabOne   && <MusicPlayerFeature></MusicPlayerFeature>}
-          {isTabTwo   && <NewFeature></NewFeature>}
-          {isTabThree && <NewFeature></NewFeature>}
+          {/* {isTabOne   && <MusicPlayerFeature />} */}
+          {isTabTwo   && <NewFeature />}
+          {isTabThree && <NewFeature />}
         </React.Fragment>
       </TabBody>
     </TabContainer>

@@ -5,7 +5,7 @@ import { TabHead, TabContainer, TabBody, Tab } from "../styles/styles";
 import { NewFeature } from "../pages/new";
 import { MusicPlayerFeature } from "../pages/music-player";
 
-const Tabs = ({ router }) => {
+const FeatureTabs = ({ router }) => {
   const {
     query: { tab },
   } = router;
@@ -43,4 +43,4 @@ const Tabs = ({ router }) => {
   );
 };
 
-export default withRouter(Tabs);
+export default withRouter(FeatureTabs);

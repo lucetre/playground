@@ -1,10 +1,10 @@
 import React from "react";
-import Tabs from "../components/tabs";
+import FeatureTabs from "../components/feature-tabs";
 
 const MainPage = (props) => {
   return (
     <div>
-      <Tabs />
+      <FeatureTabs />
     </div>
   );
 };

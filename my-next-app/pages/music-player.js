@@ -49,6 +49,7 @@ function clickPlayPause(e) {
 }
 
 function clickNext(Playlist, curIdx, setCurIdx) {
+  console.log(process.env.NODE_ENV);
   var audio = $("audio").get(0);
   curIdx = (curIdx + 1) % Playlist.length;
   getMusicInfo(Playlist, curIdx, true).then(() => {
@@ -169,7 +170,6 @@ const MusicPlayerFeature = ({ Playlist }) => {
 };
 
 async function getPlaylist() {
-  console.log(process.env.NODE_ENV);
   let url = '';
   if (process.env.NODE_ENV === 'development') {
     url = "http://localhost:3000";

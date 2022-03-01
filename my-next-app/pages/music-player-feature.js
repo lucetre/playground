@@ -18,6 +18,7 @@ function getMusicInfo(Playlist, i, includeCover, prefix) {
             }
             Playlist[i].Cover = `url(data:${format};base64,${btoa(base64String)})`;
           }
+          console.log(Playlist);
           resolve(true);
         },
         onError: (error) => {                
@@ -187,6 +188,8 @@ async function getPlaylist() {
     { Src: "music-player/music/15.mp3" },
     { Src: "music-player/music/16.mp3" },
   ];
+
+  console.log(Playlist);
   
   for (let i = 0; i < Playlist.length; i++) {
     await getMusicInfo(Playlist, i, i === 0, 'public');

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
 
-function getMusicInfo(Playlist, i, includeCover) {
+function getMusicInfo(Playlist, i, includeCover, prefix) {
   return new Promise((resolve, reject) => {
-    new jsmediatags.Reader(`https://lucetre.vercel.app/${Playlist[i].Src}`)
+    new jsmediatags.Reader(Playlist[i].Src)
       .read({
         onSuccess: (tag) => {
           Playlist[i].Title = tag.tags.title;
@@ -168,42 +168,26 @@ const MusicPlayerFeature = ({ Playlist }) => {
   </div>;
 };
 
-
-const MusicPlayer = (props) => {
-  return (
-    <div>
-      <MusicPlayerFeature {...props} />
-    </div>
-  );
-};
-
 async function getPlaylist() {
   let Playlist = [
-    { Src: "music-player/music/1.mp3" },
-    { Src: "music-player/music/2.mp3" },
-    { Src: "music-player/music/3.mp3" },
-    { Src: "music-player/music/4.mp3" },
-    { Src: "music-player/music/5.mp3" },
-    { Src: "music-player/music/6.mp3" },
-    { Src: "music-player/music/7.mp3" },
-    { Src: "music-player/music/8.mp3" },
-    { Src: "music-player/music/9.mp3" },
-    { Src: "music-player/music/10.mp3" },
-    { Src: "music-player/music/11.mp3" },
-    { Src: "music-player/music/12.mp3" },
-    { Src: "music-player/music/13.mp3" },
-    { Src: "music-player/music/14.mp3" },
-    { Src: "music-player/music/15.mp3" },
-    { Src: "music-player/music/16.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/1.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/2.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/3.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/4.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/5.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/6.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/7.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/8.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/9.mp3" },
   ];
   
   for (let i = 0; i < Playlist.length; i++) {
-    await getMusicInfo(Playlist, i, i === 0);
+    await getMusicInfo(Playlist, i, i === 0, 'public');
   }
   return { Playlist };
 }
 
-MusicPlayer.getInitialProps = getPlaylist;
+MusicPlayerFeature.getInitialProps = getPlaylist;
 
 export { MusicPlayerFeature, getPlaylist };
-export default MusicPlayer;
+export default MusicPlayerFeature;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
 
-function getMusicInfo(Playlist, i, includeCover, prefix) {
+function getMusicInfo(Playlist, i, includeCover) {
   return new Promise((resolve, reject) => {
     new jsmediatags.Reader(Playlist[i].Src)
       .read({
@@ -182,7 +182,7 @@ async function getPlaylist() {
   ];
   
   for (let i = 0; i < Playlist.length; i++) {
-    await getMusicInfo(Playlist, i, i === 0, 'public');
+    await getMusicInfo(Playlist, i, i === 0);
   }
   return { Playlist };
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { withRouter } from "next/router";
 import { TabHead, TabContainer, TabBody, Tab } from "../styles/styles";
-import NewFeature from "../pages/new";
+import NewFeature from "../pages/new-feature";
 
 const FeatureTabs = ({ router }) => {
   const {

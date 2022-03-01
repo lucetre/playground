@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
+import iconv from "iconv-lite";
+
+function decodeKR(orgStr) {
+  const eucStr = iconv.decode(orgStr, "EUC-KR").toString();
+  const eucutfStr = iconv.decode(eucStr, "UTF-8").toString();
+  const utfStr = iconv.decode(orgStr, "UTF-8").toString();
+  const utfeucStr = iconv.decode(utfStr, "EUC-KR").toString();
+  // console.log(orgStr, orgStr.length);
+  // console.log(eucStr, eucStr.length, eucutfStr, eucutfStr.length);
+  // console.log(utfStr, utfStr.length, utfeucStr, utfeucStr.length);
+  return (orgStr.length === utfStr.length || eucStr.length === utfStr.length) ? orgStr : eucStr;
+}
 
 function getMusicInfo(Playlist, i, includeCover) {
   return new Promise((resolve, reject) => {
     new jsmediatags.Reader(`${Playlist[i].Src}`)
       .read({
         onSuccess: (tag) => {
-          Playlist[i].Title = tag.tags.title;
-          Playlist[i].Artist = tag.tags.artist;
+          Playlist[i].Title = decodeKR(tag.tags.title);
+          Playlist[i].Artist = decodeKR(tag.tags.artist);
+
+          console.log(Playlist[i].Title, '-', Playlist[i].Artist);
 
           if (includeCover && !Playlist[i].Cover) {
             const data = tag.tags.picture.data;

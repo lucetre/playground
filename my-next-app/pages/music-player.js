@@ -169,11 +169,18 @@ const MusicPlayerFeature = ({ Playlist }) => {
 };
 
 async function getPlaylist() {
+  console.log(process.env.NODE_ENV);
+  let url = '';
+  if (process.env.NODE_ENV === 'development') {
+    url = "http://localhost:3000";
+  } else {
+    url = "https://lucetre.vercel.app";
+  }
   let Playlist = [
-    { Src: "https://lucetre.vercel.app/music-player/music/1.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/2.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/3.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/4.mp3" },
+    { Src: `${url}/music-player/music/1.mp3` },
+    { Src: `${url}/music-player/music/2.mp3` },
+    { Src: `${url}/music-player/music/3.mp3` },
+    { Src: `${url}/music-player/music/4.mp3` },
   ];
   
   for (let i = 0; i < Playlist.length; i++) {

@@ -3,7 +3,7 @@ import jsmediatags from "jsmediatags";
 
 function getMusicInfo(Playlist, i, includeCover, prefix) {
   return new Promise((resolve, reject) => {
-    new jsmediatags.Reader(`${prefix}/${Playlist[i].Src}`)
+    new jsmediatags.Reader(Playlist[i].Src)
       .read({
         onSuccess: (tag) => {
           Playlist[i].Title = tag.tags.title;
@@ -18,7 +18,6 @@ function getMusicInfo(Playlist, i, includeCover, prefix) {
             }
             Playlist[i].Cover = `url(data:${format};base64,${btoa(base64String)})`;
           }
-          console.log(Playlist);
           resolve(true);
         },
         onError: (error) => {                
@@ -52,7 +51,7 @@ function clickPlayPause(e) {
 function clickNext(Playlist, curIdx, setCurIdx) {
   var audio = $("audio").get(0);
   curIdx = (curIdx + 1) % Playlist.length;
-  getMusicInfo(Playlist, curIdx, true, `${window.location.protocol}//${window.location.host}`).then(() => {
+  getMusicInfo(Playlist, curIdx, true).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
     audio.load();
@@ -72,7 +71,7 @@ function clickNext(Playlist, curIdx, setCurIdx) {
 function clickPrev(Playlist, curIdx, setCurIdx) {
   var audio = $("audio").get(0);
   curIdx = (curIdx + Playlist.length - 1) % Playlist.length;
-  getMusicInfo(Playlist, curIdx, true, `${window.location.protocol}//${window.location.host}`).then(() => {
+  getMusicInfo(Playlist, curIdx, true).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
     audio.load();
@@ -95,7 +94,7 @@ function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
   $(".list-group-item:nth-child(" + x + ")").removeClass("active");
   $(".list-group-item:nth-child(" + x + ")").attr("style", "");
   curIdx = parseInt(e.target.value);
-  getMusicInfo(Playlist, curIdx, true, `${window.location.protocol}//${window.location.host}`).then(() => {
+  getMusicInfo(Playlist, curIdx, true).then(() => {
     setCurIdx(curIdx);
     var y = String(curIdx + 1);
     $(".list-group-item:nth-child(" + y + ")").addClass("active");
@@ -171,25 +170,16 @@ const MusicPlayerFeature = ({ Playlist }) => {
 
 async function getPlaylist() {
   let Playlist = [
-    { Src: "music-player/music/1.mp3" },
-    { Src: "music-player/music/2.mp3" },
-    { Src: "music-player/music/3.mp3" },
-    { Src: "music-player/music/4.mp3" },
-    { Src: "music-player/music/5.mp3" },
-    { Src: "music-player/music/6.mp3" },
-    { Src: "music-player/music/7.mp3" },
-    { Src: "music-player/music/8.mp3" },
-    { Src: "music-player/music/9.mp3" },
-    { Src: "music-player/music/10.mp3" },
-    { Src: "music-player/music/11.mp3" },
-    { Src: "music-player/music/12.mp3" },
-    { Src: "music-player/music/13.mp3" },
-    { Src: "music-player/music/14.mp3" },
-    { Src: "music-player/music/15.mp3" },
-    { Src: "music-player/music/16.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/1.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/2.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/3.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/4.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/5.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/6.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/7.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/8.mp3" },
+    { Src: "https://lucetre.vercel.app/music-player/music/9.mp3" },
   ];
-
-  console.log(Playlist);
   
   for (let i = 0; i < Playlist.length; i++) {
     await getMusicInfo(Playlist, i, i === 0, 'public');

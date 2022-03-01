@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
 
-function getMusicInfo(Playlist, i, includeCover, prefix) {
+function getMusicInfo(Playlist, i, includeCover) {
   return new Promise((resolve, reject) => {
-    new jsmediatags.Reader(Playlist[i].Src)
+    new jsmediatags.Reader(`${Playlist[i].Src}`)
       .read({
         onSuccess: (tag) => {
           Playlist[i].Title = tag.tags.title;
@@ -16,7 +16,7 @@ function getMusicInfo(Playlist, i, includeCover, prefix) {
             for (let i = 0; i < data.length; i++) {
               base64String += String.fromCharCode(data[i]);
             }
-            Playlist[i].Cover = `url(data:${format};base64,${btoa(base64String)})`;
+            Playlist[i].Cover = `url(data:${format};base64,${Buffer.from(base64String, 'binary').toString('base64')}`;
           }
           resolve(true);
         },
@@ -174,15 +174,10 @@ async function getPlaylist() {
     { Src: "https://lucetre.vercel.app/music-player/music/2.mp3" },
     { Src: "https://lucetre.vercel.app/music-player/music/3.mp3" },
     { Src: "https://lucetre.vercel.app/music-player/music/4.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/5.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/6.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/7.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/8.mp3" },
-    { Src: "https://lucetre.vercel.app/music-player/music/9.mp3" },
   ];
   
   for (let i = 0; i < Playlist.length; i++) {
-    await getMusicInfo(Playlist, i, i === 0, 'public');
+    await getMusicInfo(Playlist, i, i === 0);
   }
   return { Playlist };
 }

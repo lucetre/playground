@@ -168,20 +168,27 @@ const MusicPlayerFeature = ({ Playlist }) => {
   </div>;
 };
 
+const https = require('https')
+
+async function getMusicJson(url) {
+  const https = process.env.NODE_ENV === 'development' ? require('http') : require('https');
+  return new Promise((resolve) => {
+    https.get(`${url}/music-player/music.json`, res => {
+      let data = "";
+      res.on('data', chunk => { data += chunk }) 
+      res.on('end', () => {
+        resolve(JSON.parse(data).map((src) => {
+          return { Src: `${url}${src}` };
+        }));
+      })
+    }) 
+  });
+}
+
+
 async function getPlaylist() {
-  let url = '';
-  if (process.env.NODE_ENV === 'development') {
-    url = "http://localhost:3000";
-  } else if (process.env.NODE_ENV === 'production') {
-    // url = "https://blog-vercel-git-develop-lucetre.vercel.app";
-    url = "https://lucetre.vercel.app";
-  }
-  let Playlist = [
-    { Src: `${url}/music-player/music/1.mp3` },
-    { Src: `${url}/music-player/music/2.mp3` },
-    { Src: `${url}/music-player/music/3.mp3` },
-    { Src: `${url}/music-player/music/4.mp3` },
-  ];
+  let url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://lucetre.vercel.app";
+  const Playlist = await getMusicJson(url);
   
   for (let i = 0; i < Playlist.length; i++) {
     await getMusicInfo(Playlist, i, i === 0);

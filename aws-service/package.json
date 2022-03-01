@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1083.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}

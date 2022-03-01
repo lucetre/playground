@@ -49,7 +49,6 @@ function clickPlayPause(e) {
 }
 
 function clickNext(Playlist, curIdx, setCurIdx) {
-  console.log(process.env.NODE_ENV);
   var audio = $("audio").get(0);
   curIdx = (curIdx + 1) % Playlist.length;
   getMusicInfo(Playlist, curIdx, true).then(() => {
@@ -173,7 +172,8 @@ async function getPlaylist() {
   let url = '';
   if (process.env.NODE_ENV === 'development') {
     url = "http://localhost:3000";
-  } else {
+  } else if (process.env.NODE_ENV === 'production') {
+    // url = "https://blog-vercel-git-develop-lucetre.vercel.app";
     url = "https://lucetre.vercel.app";
   }
   let Playlist = [

@@ -4,7 +4,7 @@ import FeatureTabs from "../components/feature-tabs";
 const MainPage = (props) => {
   return (
     <div>
-      <FeatureTabs />
+      <FeatureTabs props={ props } />
     </div>
   );
 };

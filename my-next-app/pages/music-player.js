@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
 
-function getMusicInfo(Playlist, i, includeCover) {
+function getMusicInfo(Playlist, i, includeCover, prefix) {
   return new Promise((resolve, reject) => {
-    new jsmediatags.Reader(`https://lucetre.vercel.app/${Playlist[i].Src}`)
+    new jsmediatags.Reader(`${prefix}/${Playlist[i].Src}`)
       .read({
         onSuccess: (tag) => {
           Playlist[i].Title = tag.tags.title;
@@ -51,7 +51,7 @@ function clickPlayPause(e) {
 function clickNext(Playlist, curIdx, setCurIdx) {
   var audio = $("audio").get(0);
   curIdx = (curIdx + 1) % Playlist.length;
-  getMusicInfo(Playlist, curIdx, true).then(() => {
+  getMusicInfo(Playlist, curIdx, true, `${window.location.protocol}//${window.location.host}`).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
     audio.load();
@@ -71,7 +71,7 @@ function clickNext(Playlist, curIdx, setCurIdx) {
 function clickPrev(Playlist, curIdx, setCurIdx) {
   var audio = $("audio").get(0);
   curIdx = (curIdx + Playlist.length - 1) % Playlist.length;
-  getMusicInfo(Playlist, curIdx, true).then(() => {
+  getMusicInfo(Playlist, curIdx, true, `${window.location.protocol}//${window.location.host}`).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
     audio.load();
@@ -94,7 +94,7 @@ function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
   $(".list-group-item:nth-child(" + x + ")").removeClass("active");
   $(".list-group-item:nth-child(" + x + ")").attr("style", "");
   curIdx = parseInt(e.target.value);
-  getMusicInfo(Playlist, curIdx, true).then(() => {
+  getMusicInfo(Playlist, curIdx, true, `${window.location.protocol}//${window.location.host}`).then(() => {
     setCurIdx(curIdx);
     var y = String(curIdx + 1);
     $(".list-group-item:nth-child(" + y + ")").addClass("active");
@@ -168,15 +168,6 @@ const MusicPlayerFeature = ({ Playlist }) => {
   </div>;
 };
 
-
-const MusicPlayer = (props) => {
-  return (
-    <div>
-      <MusicPlayerFeature {...props} />
-    </div>
-  );
-};
-
 async function getPlaylist() {
   let Playlist = [
     { Src: "music-player/music/1.mp3" },
@@ -198,12 +189,12 @@ async function getPlaylist() {
   ];
   
   for (let i = 0; i < Playlist.length; i++) {
-    await getMusicInfo(Playlist, i, i === 0);
+    await getMusicInfo(Playlist, i, i === 0, 'public');
   }
   return { Playlist };
 }
 
-MusicPlayer.getInitialProps = getPlaylist;
+MusicPlayerFeature.getInitialProps = getPlaylist;
 
 export { MusicPlayerFeature, getPlaylist };
-export default MusicPlayer;
+export default MusicPlayerFeature;

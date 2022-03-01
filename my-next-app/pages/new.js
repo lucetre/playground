@@ -1,16 +1,11 @@
 import React from "react";
 
 const NewFeature = () => {
-  return <div>This is a page for new feature.</div>;
-};
-
-const NewPage = (props) => {
   return (
     <div>
-      <NewFeature />
+      This tab is for a new feature.
     </div>
   );
 };
 
-export { NewFeature };
-export default NewPage;
+export default NewFeature;

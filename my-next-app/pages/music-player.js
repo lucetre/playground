@@ -168,8 +168,6 @@ const MusicPlayerFeature = ({ Playlist }) => {
   </div>;
 };
 
-const https = require('https')
-
 async function getMusicJson(url) {
   const https = process.env.NODE_ENV === 'development' ? require('http') : require('https');
   return new Promise((resolve) => {

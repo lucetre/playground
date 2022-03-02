@@ -4,26 +4,22 @@ import iconv from "iconv-lite";
 
 function decodeKR(orgStr) {
   const eucStr = iconv.decode(orgStr, "EUC-KR").toString();
-  const eucutfStr = iconv.decode(eucStr, "UTF-8").toString();
   const utfStr = iconv.decode(orgStr, "UTF-8").toString();
-  const utfeucStr = iconv.decode(utfStr, "EUC-KR").toString();
-  // console.log(orgStr, orgStr.length);
-  // console.log(eucStr, eucStr.length, eucutfStr, eucutfStr.length);
-  // console.log(utfStr, utfStr.length, utfeucStr, utfeucStr.length);
   return (orgStr.length === utfStr.length || eucStr.length === utfStr.length) ? orgStr : eucStr;
 }
 
-function getMusicInfo(Playlist, i, includeCover) {
+function getMusicInfo(Playlist, i) {
   return new Promise((resolve, reject) => {
     new jsmediatags.Reader(`${Playlist[i].Src}`)
       .read({
         onSuccess: (tag) => {
-          Playlist[i].Title = decodeKR(tag.tags.title);
-          Playlist[i].Artist = decodeKR(tag.tags.artist);
-
-          console.log(Playlist[i].Title, '-', Playlist[i].Artist);
-
-          if (includeCover && !Playlist[i].Cover) {
+          if (!Playlist[i].Title) {
+            Playlist[i].Title = decodeKR(tag.tags.title);
+          }
+          if (!Playlist[i].Artist) {
+            Playlist[i].Artist = decodeKR(tag.tags.artist);
+          }
+          if (!Playlist[i].Cover) {
             const data = tag.tags.picture.data;
             const format = tag.tags.picture.format;
             let base64String = "";
@@ -65,7 +61,7 @@ function clickPlayPause(e) {
 function clickNext(Playlist, curIdx, setCurIdx) {
   var audio = $("audio").get(0);
   curIdx = (curIdx + 1) % Playlist.length;
-  getMusicInfo(Playlist, curIdx, true).then(() => {
+  getMusicInfo(Playlist, curIdx).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
     audio.load();
@@ -85,7 +81,7 @@ function clickNext(Playlist, curIdx, setCurIdx) {
 function clickPrev(Playlist, curIdx, setCurIdx) {
   var audio = $("audio").get(0);
   curIdx = (curIdx + Playlist.length - 1) % Playlist.length;
-  getMusicInfo(Playlist, curIdx, true).then(() => {
+  getMusicInfo(Playlist, curIdx).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
     audio.load();
@@ -108,7 +104,7 @@ function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
   $(".list-group-item:nth-child(" + x + ")").removeClass("active");
   $(".list-group-item:nth-child(" + x + ")").attr("style", "");
   curIdx = parseInt(e.target.value);
-  getMusicInfo(Playlist, curIdx, true).then(() => {
+  getMusicInfo(Playlist, curIdx).then(() => {
     setCurIdx(curIdx);
     var y = String(curIdx + 1);
     $(".list-group-item:nth-child(" + y + ")").addClass("active");
@@ -139,7 +135,9 @@ const MusicPlayerFeature = ({ Playlist }) => {
           <div className="playlist overlay">
             <ul className="list-group">
               { Playlist.map((_, i) => {
-                return <button id={`btn-${i}`} key={i} value={i} className={ i ? "list-group-item" : "list-group-item active" } onClick={ (e) => clickListGroupItem(e, Playlist, curIdx, setCurIdx) }>{`${Playlist[i].Title} - ${Playlist[i].Artist}`}</button>;
+                return <button id={`btn-${i}`} key={i} value={i} className={ i ? "list-group-item" : "list-group-item active" } onClick={ (e) => clickListGroupItem(e, Playlist, curIdx, setCurIdx) }>{
+                  decodeURI(Playlist[i].Src).split('.mp3')[0].split('/music/')[1]
+                }</button>;
               })}
             </ul>
           </div>
@@ -201,10 +199,7 @@ async function getMusicJson(url) {
 async function getPlaylist() {
   let url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://lucetre.vercel.app";
   const Playlist = await getMusicJson(url);
-  
-  for (let i = 0; i < Playlist.length; i++) {
-    await getMusicInfo(Playlist, i, i === 0);
-  }
+  await getMusicInfo(Playlist, 0);
   return { Playlist };
 }
 

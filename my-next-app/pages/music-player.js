@@ -76,6 +76,10 @@ function clickNext(Playlist, curIdx, setCurIdx) {
     $(".list-group-item:" + str).removeClass("active");
     $(".list-group-item:" + str).attr("style", "");
   });
+  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, prevIdx);
+  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, nextIdx);
 }
 
 function clickPrev(Playlist, curIdx, setCurIdx) {
@@ -96,6 +100,10 @@ function clickPrev(Playlist, curIdx, setCurIdx) {
     $(".list-group-item:" + str).removeClass("active");
     $(".list-group-item:" + str).attr("style", "");
   });
+  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, prevIdx);
+  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, nextIdx);
 }
 
 function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
@@ -115,6 +123,10 @@ function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
     $(btn).html("<i style='color:#007bff' class='fa fa-pause'></i>");
     $(".range-indicator").toggleClass("range-indicator-pause");
   });
+  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, prevIdx);
+  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, nextIdx);
 }
 
 const MusicPlayerFeature = ({ Playlist }) => {
@@ -199,7 +211,13 @@ async function getMusicJson(url) {
 async function getPlaylist() {
   let url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://lucetre.vercel.app";
   const Playlist = await getMusicJson(url);
-  await getMusicInfo(Playlist, 0);
+  const curIdx = 0;
+  await getMusicInfo(Playlist, curIdx);
+  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, prevIdx);
+  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  getMusicInfo(Playlist, nextIdx);
+  
   return { Playlist };
 }
 

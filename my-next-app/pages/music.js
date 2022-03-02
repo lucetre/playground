@@ -4,6 +4,7 @@ import iconv from 'iconv-lite';
 import encoding from 'encoding-japanese';
  
 function decodeKR(orgStr) {
+  iconv.skipDecodeWarning = true;
   if (encoding.detect(orgStr) === 'EUCJP') {
     return iconv.decode(orgStr, 'euc-kr');
   }

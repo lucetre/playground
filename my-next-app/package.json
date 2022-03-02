@@ -11,6 +11,7 @@
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
     "encoding-japanese": "^1.0.30",
+    "iconv-lite": "^0.6.3",
     "jsmediatags": "^3.9.7",
     "next": "12.0.10",
     "react": "17.0.2"

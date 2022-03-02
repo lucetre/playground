@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
-var encoding = require('encoding-japanese');
+import iconv from 'iconv-lite';
+import encoding from 'encoding-japanese';
  
+function decodeKR(orgStr) {
+  if (encoding.detect(orgStr) === 'EUCJP') {
+    return iconv.decode(orgStr, 'euc-kr');
+  }
+  return Buffer.from(orgStr).toString();
+}
+
 function getMusicInfo(Playlist, i) {
   return new Promise((resolve, reject) => {
     new jsmediatags.Reader(`${Playlist[i].Src}`)
       .read({
         onSuccess: (tag) => {
           if (!Playlist[i].Title) {
-            console.log(encoding.detect(tag.tags.title));
-            Playlist[i].Title = Buffer.from(tag.tags.title).toString();
+            Playlist[i].Title = decodeKR(tag.tags.title);
           }
           if (!Playlist[i].Artist) {
-            // Playlist[i].Artist = Buffer.from(tag.tags.artist, 'utf8').toString();
-            Playlist[i].Artist = Buffer.from(tag.tags.artist).toString();
+            Playlist[i].Artist = decodeKR(tag.tags.artist);
           }
           if (!Playlist[i].Cover) {
             const data = tag.tags.picture.data;

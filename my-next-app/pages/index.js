@@ -1,10 +1,10 @@
 import React from "react";
-import { MusicPlayerFeature, getPlaylist } from "./music-player";
+import { MusicPlayer as MusicPlayer, getPlaylist } from "./music";
 
 const MainPage = (props) => {
   return (
     <div>
-      <MusicPlayerFeature { ...props } />
+      <MusicPlayer { ...props } />
     </div>
   );
 };

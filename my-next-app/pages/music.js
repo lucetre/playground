@@ -129,7 +129,7 @@ function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
   getMusicInfo(Playlist, nextIdx);
 }
 
-const MusicPlayerFeature = ({ Playlist }) => {
+const MusicPlayer = ({ Playlist }) => {
   const [ curIdx, setCurIdx ] = useState(0);
   return <div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossOrigin="anonymous" />
@@ -221,7 +221,7 @@ async function getPlaylist() {
   return { Playlist };
 }
 
-MusicPlayerFeature.getInitialProps = getPlaylist;
+MusicPlayer.getInitialProps = getPlaylist;
 
-export { MusicPlayerFeature, getPlaylist };
-export default MusicPlayerFeature;
+export { MusicPlayer, getPlaylist };
+export default MusicPlayer;

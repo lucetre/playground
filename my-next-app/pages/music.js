@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import jsmediatags from "jsmediatags";
-import iconv from "iconv-lite";
-
+import iconv from 'iconv-lite';
+import encoding from 'encoding-japanese';
+ 
 function decodeKR(orgStr) {
-  const eucStr = iconv.decode(orgStr, "EUC-KR").toString();
-  const utfStr = iconv.decode(orgStr, "UTF-8").toString();
-  return (orgStr.length === utfStr.length || eucStr.length === utfStr.length) ? orgStr : eucStr;
+  if (encoding.detect(orgStr) === 'EUCJP') {
+    return iconv.decode(orgStr, 'euc-kr');
+  }
+  return Buffer.from(orgStr).toString();
 }
 
 function getMusicInfo(Playlist, i) {

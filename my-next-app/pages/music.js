@@ -61,9 +61,9 @@ function clickPlayPause(e) {
   }
 }
 
-function clickNext(Playlist, curIdx, setCurIdx) {
+function clickNext(Playlist, curIdx, setCurIdx, seed) {
   var audio = $("audio").get(0);
-  curIdx = (curIdx + 1) % Playlist.length;
+  curIdx = (curIdx + seed) % Playlist.length;
   getMusicInfo(Playlist, curIdx).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
@@ -73,21 +73,20 @@ function clickNext(Playlist, curIdx, setCurIdx) {
     $(btn).html("<i style='color:#007bff' class='fa fa-pause'></i>");
     $(".range-indicator").toggleClass("range-indicator-pause");
     var x = String(curIdx + 1);
-    var y = String(curIdx);
-    let str = curIdx ? `nth-child(${y})` : "last-child()";
+    var y = String((curIdx-seed + Playlist.length) % Playlist.length + 1);
     $(".list-group-item:nth-child(" + x + ")").addClass("active");
-    $(".list-group-item:" + str).removeClass("active");
-    $(".list-group-item:" + str).attr("style", "");
+    $(".list-group-item:nth-child(" + y + ")").removeClass("active");
+    $(".list-group-item:nth-child(" + y + ")").attr("style", "");
   });
-  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  const prevIdx = (curIdx-seed + Playlist.length) % Playlist.length;
   getMusicInfo(Playlist, prevIdx);
-  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  const nextIdx = (curIdx+seed + Playlist.length) % Playlist.length;
   getMusicInfo(Playlist, nextIdx);
 }
 
-function clickPrev(Playlist, curIdx, setCurIdx) {
+function clickPrev(Playlist, curIdx, setCurIdx, seed) {
   var audio = $("audio").get(0);
-  curIdx = (curIdx + Playlist.length - 1) % Playlist.length;
+  curIdx = (curIdx + Playlist.length - seed) % Playlist.length;
   getMusicInfo(Playlist, curIdx).then(() => {
     setCurIdx(curIdx);
     $(".carousel").carousel(curIdx);
@@ -97,19 +96,18 @@ function clickPrev(Playlist, curIdx, setCurIdx) {
     $(btn).html("<i style='color:#007bff' class='fa fa-pause'></i>");
     $(".range-indicator").toggleClass("range-indicator-pause");
     var x = String(curIdx + 1);
-    var y = String(curIdx + 2);
-    let str = Playlist.length-1-curIdx ? `nth-child(${y})` : "first-child()";
+    var y = String((curIdx+seed + Playlist.length) % Playlist.length + 1);
     $(".list-group-item:nth-child(" + x + ")").addClass("active");
-    $(".list-group-item:" + str).removeClass("active");
-    $(".list-group-item:" + str).attr("style", "");
+    $(".list-group-item:nth-child(" + y + ")").removeClass("active");
+    $(".list-group-item:nth-child(" + y + ")").attr("style", "");
   });
-  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  const prevIdx = (curIdx-seed + Playlist.length) % Playlist.length;
   getMusicInfo(Playlist, prevIdx);
-  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  const nextIdx = (curIdx+seed + Playlist.length) % Playlist.length;
   getMusicInfo(Playlist, nextIdx);
 }
 
-function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
+function clickListGroupItem(e, Playlist, curIdx, setCurIdx, seed) {
   var audio = $("audio").get(0);
   var x = String(curIdx + 1);
   $(".list-group-item:nth-child(" + x + ")").removeClass("active");
@@ -126,14 +124,31 @@ function clickListGroupItem(e, Playlist, curIdx, setCurIdx) {
     $(btn).html("<i style='color:#007bff' class='fa fa-pause'></i>");
     $(".range-indicator").toggleClass("range-indicator-pause");
   });
-  const prevIdx = (curIdx-1 + Playlist.length) % Playlist.length;
+  const prevIdx = (curIdx-seed + Playlist.length) % Playlist.length;
   getMusicInfo(Playlist, prevIdx);
-  const nextIdx = (curIdx+1 + Playlist.length) % Playlist.length;
+  const nextIdx = (curIdx+seed + Playlist.length) % Playlist.length;
   getMusicInfo(Playlist, nextIdx);
+}
+
+function clickShuffle(Playlist, setSeed) {
+  var btn = $("#shuffle-btn").get(0);
+  if (btn.value == 1) {
+    btn.value = 0;
+    $(btn).attr("style", "");
+    setSeed(1);
+  } else {
+    btn.value = 1;
+    $(btn).attr("style", "color:#007bff");
+    const newSeed = Math.floor(Math.random() * Playlist.length);
+    setSeed(newSeed);
+    console.log(newSeed);
+  }
+
 }
 
 const MusicPlayer = ({ Playlist }) => {
   const [ curIdx, setCurIdx ] = useState(0);
+  const [ seed, setSeed ] = useState(1);
   return <div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossOrigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -150,7 +165,7 @@ const MusicPlayer = ({ Playlist }) => {
           <div className="playlist overlay">
             <ul className="list-group">
               { Playlist.map((_, i) => {
-                return <button id={`btn-${i}`} key={i} value={i} className={ i ? "list-group-item" : "list-group-item active" } onClick={ (e) => clickListGroupItem(e, Playlist, curIdx, setCurIdx) }>{
+                return <button id={`btn-${i}`} key={i} value={i} className={ i ? "list-group-item" : "list-group-item active" } onClick={ (e) => clickListGroupItem(e, Playlist, curIdx, setCurIdx, seed) }>{
                   decodeURI(Playlist[i].Src).split('.mp3')[0].split('/music/')[1]
                 }</button>;
               })}
@@ -173,16 +188,16 @@ const MusicPlayer = ({ Playlist }) => {
             <input type="range" id="inputrange" />
           </div>
           <button id="playlist-btn" value="0"><i className="fa fa-bars"></i></button>
-          <button id="shuffle-btn"><i className="fa fa-random"></i></button>
+          <button id="shuffle-btn" value="0" onClick={ () => clickShuffle(Playlist, setSeed) }><i className="fa fa-random"></i></button>
           <div id="song">
             <div id="songName">{ Playlist[curIdx].Title }</div>
             <div id="artistName">{ Playlist[curIdx].Artist }</div>
           </div>
           <div id="tracktime">0/0</div>
           <div className="controls">
-            <button id="prev" className="control-btn" onClick={ () => clickPrev(Playlist, curIdx, setCurIdx) }><i className="fa fa-backward"></i></button>
+            <button id="prev" className="control-btn" onClick={ () => clickPrev(Playlist, curIdx, setCurIdx, seed) }><i className="fa fa-backward"></i></button>
             <button id="play-pause" className="control-btn" value="1" onClick={ clickPlayPause }><i className="fa fa-play"></i></button>
-            <button id="next" className=" control-btn" onClick={ () => clickNext(Playlist, curIdx, setCurIdx) }><i className="fa fa-forward"></i></button>
+            <button id="next" className=" control-btn" onClick={ () => clickNext(Playlist, curIdx, setCurIdx, seed) }><i className="fa fa-forward"></i></button>
           </div>
         </div>
       </div>

@@ -249,7 +249,7 @@ async function getMusicJson(url) {
 }
 
 async function getPlaylist() {
-  let url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://music-player.lucetre.vercel.app";
+  let url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://lucetre.vercel.app";
   const Playlist = await getMusicJson(url);
   const curIdx = 0;
   await getMusicInfo(Playlist, curIdx);

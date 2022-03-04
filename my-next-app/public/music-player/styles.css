@@ -1,0 +1,335 @@
+body {
+  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  font-family: "Ubuntu";
+}
+
+.carousel-item {
+  width: 298px;
+  height: 298px;
+  background-size: 298px;
+}
+
+#play-range {
+  position: absolute;
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  background: transparent;
+  -webkit-appearance: none;
+  height: 5px;
+  z-index: 1;
+}
+
+#play-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: none;
+  box-shadow: none;
+  height: 10px;
+  width: 10px;
+}
+
+#play-range::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 10px;
+}
+
+#range {
+  position: absolute;
+  background-color: grey;
+  padding: 0px;
+  height: 5px;
+  width: 100%;
+  display: block;
+}
+
+#play-range:focus {
+  outline: none;
+}
+
+.range-indicator {
+  position: absolute;
+  background: #f44336;
+  height: 5px;
+  z-index: 1;
+  width: 0%;
+  display: block;
+  transition: all 0.5s;
+}
+
+.card {
+  width: 300px;
+  margin: 10rem auto;
+  padding: 0px;
+  box-shadow: 0px 0px 100px black;
+}
+
+.card-body {
+  padding: 0px;
+  text-align: center;
+  padding-bottom: 10px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.controls {
+  display: inline;
+  margin: auto;
+  padding: 0px;
+}
+
+.album-img {
+  width: 100%;
+}
+
+#Album-carousel {
+  width: 100%;
+  margin: auto;
+}
+
+.control-btn {
+  padding: 7px 7px;
+  color: black;
+  background: transparent;
+  border: none;
+  margin: 0px 30px;
+  font-size: 20px;
+  transition: color 0.2s;
+}
+
+.control-btn:hover {
+  background: transparent;
+  color: #14b879;
+  cursor: pointer;
+}
+
+.control-btn:focus {
+  outline: none;
+}
+
+.control-btn:active {
+  border: none;
+  outline: none;
+}
+
+#play-pause {
+  width: 10%;
+  transition: all 0.2s;
+  color: #007bff;
+}
+
+#song {
+  height: 80px;
+  line-height: 140%;
+  padding: 0 50px;
+  transition: all 0.5s;
+}
+
+#songName {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -1px;
+  font-size: 20px;
+}
+
+#artistName {
+  padding: 5px 0px 5px 0px;
+  height: 40px;
+  font-size: 13px;
+  line-height: 120%;
+}
+
+.range-indicator-pause {
+  background-color: #007bff;
+  transition: all 0.5s;
+}
+
+#playlist-btn {
+  position: absolute;
+  transform: translate(-130px, 25px);
+  background: transparent;
+  color: black;
+  border: none;
+  transition: color 0.2s;
+}
+
+#playlist-btn:hover {
+  cursor: pointer;
+}
+
+#shuffle-btn {
+  position: absolute;
+  transform: translate(105px, 25px);
+  background: transparent;
+  color: black;
+  border: none;
+  transition: color 0.2s;
+}
+
+.overlay {
+  position: absolute;
+  width: 298px;
+  height: 0px;
+  background: transparent;
+  z-index: 1;
+  overflow: auto;
+  transition: all 0.5s;
+  background-color: #000000a1;
+}
+
+.overlay::-webkit-scrollbar{
+  width: 8px;
+}
+
+.overlay::-webkit-scrollbar-thumb{
+    height: 17%;
+    background-color: #14b879;
+    border-radius: 10px;
+}
+
+.overlay::-webkit-scrollbar-track{
+    background-color: rgba(33,133,133,0.15);
+}
+
+.overlay.more-width::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overlay.more-width::-webkit-scrollbar-thumb{
+    border: 2px solid #01db87;
+}
+
+#lyrics-overlay {
+  overflow-x: hidden;
+  text-align: center;
+  color: white;
+  font-size: small;
+}
+
+.song-lyrics {
+  word-break: keep-all;
+  word-wrap: break-word;
+  padding: 2px 15px;
+  margin: 0;
+}
+
+.list-group-item:hover {
+  cursor: pointer;
+}
+
+.list-group-item {
+  background-color: transparent;
+  transition: background-color 0.5s;
+  color: white;
+  padding: 1px;
+  font-size: small;
+  border-color: transparent;
+}
+
+.list-group-item.active {
+  transition: background-color 0.4s;
+  background-color: #007bffa1;
+  border-color: transparent;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #000000a1;
+}
+
+#volume-range {
+  -webkit-appearance: none; 
+  margin: 0 6px;
+  width: 50px; 
+  height: 3px;
+  vertical-align: middle;
+  background: #d5d4d3; 
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 450ms ease-in;
+}
+
+#volume-range:focus {
+  outline: none; 
+}
+
+#volume-range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+#volume-range::-moz-range-thumb{
+  -webkit-appearance: none;
+  width:10px;
+  height:10px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+#mid-controls {
+  width: 100%;
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between;
+}
+
+#lyric {
+  background: transparent;
+  font-size: small;
+  padding: 0 10px;
+  margin: 0 10px 0 20px;
+  border: 1px solid #00c87b;
+  border-radius: 20px;
+  color: #00c87b;
+}
+
+#tracktime {
+  width: 90px;
+  padding: 3px 0;
+  color: #00c87b;
+  font-size: 13px;
+}
+
+#volume {
+  margin: 0 10px 0 0;
+}
+
+#mute {
+  color: #b6b5b3;
+  background: transparent;
+  border: none;
+  margin: 0px;
+  font-size: 15px;
+  transition: color 0.2s;
+}
+
+#mute:hover {
+  background: transparent;
+  color: #00c87b;
+  cursor: pointer;
+}
+
+#mute:focus {
+  outline: none;
+}
+
+#mute:active {
+  border: none;
+  outline: none;
+}

@@ -1,12 +1,14 @@
 import React from "react";
-import FeatureTabs from "../components/feature-tabs";
+import { MusicPlayer as MusicPlayer, getPlaylist } from "./music";
 
 const MainPage = (props) => {
   return (
     <div>
-      <FeatureTabs { ...props } />
+      <MusicPlayer { ...props } />
     </div>
   );
 };
+
+MainPage.getInitialProps = getPlaylist;
 
 export default MainPage;

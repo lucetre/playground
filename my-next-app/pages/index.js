@@ -1,14 +1,11 @@
 import React from "react";
-import { MusicPlayer as MusicPlayer, getPlaylist } from "./music";
 
 const MainPage = (props) => {
   return (
-    <div>
-      <MusicPlayer { ...props } />
-    </div>
+    <>
+      <h1>This is main page</h1>
+    </>
   );
 };
-
-MainPage.getInitialProps = getPlaylist;
 
 export default MainPage;

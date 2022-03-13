@@ -1,12 +1,67 @@
-export default async (req, res) => {
-    let url = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://lucetre.vercel.app";
-    const playlist = await fetch(`${url}/api/playlist`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-    }).then((resp) => resp.json());
+const fs = require('fs');
+const jsmediatags = require("jsmediatags");
+const iconv = require('iconv-lite');
+const encoding = require('encoding-japanese');
+const sharp = require('sharp');
 
-    const id = parseInt(req.query.id);
-    res.status(200).json({ Src: playlist[id] });
+function decodeKR(orgStr) {
+  iconv.skipDecodeWarning = true;
+  if (encoding.detect(orgStr) === 'EUCJP') {
+    return iconv.decode(orgStr, 'euc-kr');
+  }
+  return Buffer.from(orgStr).toString();
 }
+
+function readMusic(file) {
+  const music = { Src: encodeURI(file) };
+  return new Promise((resolve, reject) =>  {
+    new jsmediatags.Reader(`${ process.cwd() }/public/music/${ file }`).read({
+      onSuccess: async (tag) => {
+        music.Votes = 1;
+        music.Title = decodeKR(tag.tags.title);
+        music.Artist = decodeKR(tag.tags.artist);
+        if (tag.tags.lyrics && tag.tags.lyrics.lyrics) {
+          music.Lyrics = decodeKR(tag.tags.lyrics.lyrics);
+        } else {
+          music.Lyrics = ' ';
+        }
+        // if (tag.tags.picture) {
+        //   const data = tag.tags.picture.data;
+        //   const format = tag.tags.picture.format;
+        //   let base64String = "";
+        //   for (let i = 0; i < data.length; i++) {
+        //     base64String += String.fromCharCode(data[i]);
+        //   }
+        //   const dataUri = Buffer.from(Buffer.from(base64String, 'binary').toString('base64'), 'base64');
+        //   const newUri = await sharp(dataUri).resize(300, 300).toBuffer();
+        //   music.Cover = `url(data:${format};base64,${newUri.toString('base64')})`;
+        // } else {
+        //   music.Cover = ' ';
+        // }
+        resolve(music);
+      },
+      onError: function(e){
+        console.error(e);
+        reject();
+      }
+    });
+  });
+}
+
+function fetchMusic(req, res) {
+  const id = parseInt(req.query.id);
+  return new Promise((resolve, reject) => {
+    fs.readdir(`${ process.cwd() }/public/music`, async (err, files) => {
+      if (err) {
+        res.status(400).json(err);
+        reject();
+      }
+      const file = files[id];
+      const music = await readMusic(file);
+      res.status(200).json(music);
+      resolve();
+    });
+  });
+}
+
+export default fetchMusic;

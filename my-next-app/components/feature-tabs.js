@@ -2,7 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { withRouter } from "next/router";
 import { TabHead, TabContainer, TabBody, Tab } from "../styles/styles";
-import NewFeature from "../pages/new-feature";
+import NewFeature from "../pages/new";
+import DiscordFeature from "../pages/discord";
 
 const FeatureTabs = ({ router }) => {
   const {
@@ -17,7 +18,7 @@ const FeatureTabs = ({ router }) => {
       <TabHead>
         <Tab selected={isTabOne}>
           <Link href={{ pathname: "/", query: { tab: "1" } }}>
-            <a>Feature #1: TBD</a>
+            <a>Feature #1: Discord</a>
           </Link>
         </Tab>
         <Tab selected={isTabTwo}>
@@ -33,7 +34,7 @@ const FeatureTabs = ({ router }) => {
       </TabHead>
       <TabBody>
         <React.Fragment>
-          {isTabOne   && <NewFeature />}
+          {isTabOne   && <DiscordFeature />}
           {isTabTwo   && <NewFeature />}
           {isTabThree && <NewFeature />}
         </React.Fragment>

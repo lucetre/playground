@@ -93,7 +93,7 @@ const DiscordFeature = () => {
             type="text"
             className="form-control"
             id="avatar_url"
-            defaultValue="https://i.imgur.com/4M34hi2.png"
+            placeholder="https://i.imgur.com/4M34hi2.png"
           />
         </div>
         <div className="col-12">

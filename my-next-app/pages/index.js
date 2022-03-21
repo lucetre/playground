@@ -1,11 +1,16 @@
 import React from "react";
-import FeatureTabs from "../components/feature-tabs";
+import { Link } from 'components';
+
 
 const MainPage = (props) => {
   return (
     <>
       <h1>This is main page</h1>
-      <FeatureTabs></FeatureTabs>
+      <ul>
+        <li><Link href="/users">User</Link></li>
+        <li><Link href="/discord">Discord</Link></li>
+        <li><Link href="/new">New</Link></li>
+      </ul>
     </>
   );
 };

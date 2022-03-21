@@ -24,8 +24,16 @@ function Index() {
 
     return (
         <div>
-            <h1>Users</h1>
-            <Link href="/users/add" className="btn btn-sm btn-success mb-2">Add User</Link>
+            <div className="container row">
+                <div className="col-6">
+                    <h1>Users</h1>
+                </div>
+                    
+                <div className="col-6" style={{textAlign:"right"}}>
+                    <Link href="/users/add" className="btn btn-success">Add User</Link>
+                </div>
+            </div>
+            
             <table className="table table-striped">
                 <thead>
                     <tr>

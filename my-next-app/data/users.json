@@ -3,11 +3,22 @@
         "title": "Mr",
         "firstName": "상준",
         "lastName": "손",
-        "email": "32@23.com",
+        "email": "32@233232.com",
         "role": "Admin",
         "password": "111111",
         "id": 2,
         "dateCreated": "2022-03-21T12:41:23.338Z",
-        "dateUpdated": "2022-03-21T12:41:23.338Z"
+        "dateUpdated": "2022-03-21T15:04:29.191Z"
+    },
+    {
+        "title": "Mr",
+        "firstName": "123",
+        "lastName": "213",
+        "email": "123@123.co.kr",
+        "role": "User",
+        "password": "123123",
+        "id": 3,
+        "dateCreated": "2022-03-21T15:04:46.924Z",
+        "dateUpdated": "2022-03-21T15:04:46.924Z"
     }
 ]

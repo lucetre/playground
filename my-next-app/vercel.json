@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/users/[id].js": {
+    "pages/api/users/[id].js": {
       "includeFiles": "data/**"
     }
   }

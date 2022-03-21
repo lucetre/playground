@@ -1,8 +1,7 @@
 {
-    "functions": {
-      "api/user/*.js": {
-        "includeFiles": "data/**"
-      }
+  "functions": {
+    "api/**": {
+      "includeFiles": "data/**"
     }
   }
-  
+}

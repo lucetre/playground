@@ -2,7 +2,7 @@ const fs = require("fs");
 
 let users = require("data/users.json");
 
-export const usersJsonRepo = {
+export const usersRepo = {
   getAll,
   getById,
   create,

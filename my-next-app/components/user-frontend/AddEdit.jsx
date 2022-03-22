@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { Link } from 'components';
-import { userPostgresService, alertService } from 'services';
+import { userFrontendService, alertService } from 'services';
 
 export { AddEdit };
 
@@ -17,13 +17,17 @@ function AddEdit(props) {
     
     // form validation rules 
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required('Username is required'),
-        name: Yup.string()
-            .required('Name is required'),
+        title: Yup.string()
+            .required('Title is required'),
+        firstName: Yup.string()
+            .required('First Name is required'),
+        lastName: Yup.string()
+            .required('Last Name is required'),
         email: Yup.string()
             .email('Email is invalid')
             .required('Email is required'),
+        role: Yup.string()
+            .required('Role is required'),
         password: Yup.string()
             .transform(x => x === '' ? undefined : x)
             .concat(isAddMode ? Yup.string().required('Password is required') : null)
@@ -54,7 +58,7 @@ function AddEdit(props) {
     }
 
     function createUser(data) {
-        return userPostgresService.create(data)
+        return userFrontendService.create(data)
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
                 router.push('.');
@@ -63,7 +67,7 @@ function AddEdit(props) {
     }
 
     function updateUser(id, data) {
-        return userPostgresService.update(id, data)
+        return userFrontendService.update(id, data)
             .then(() => {
                 alertService.success('User updated', { keepAfterRouteChange: true });
                 router.push('..');
@@ -75,22 +79,42 @@ function AddEdit(props) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <h1>{isAddMode ? 'Add User' : 'Edit User'}</h1>
             <div className="form-row">
-                <div className="form-group col-6">
-                    <label>Userame</label>
-                    <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
-                    <div className="invalid-feedback">{errors.username?.message}</div>
+                <div className="form-group col">
+                    <label>Title</label>
+                    <select name="title" {...register('title')} className={`form-control ${errors.title ? 'is-invalid' : ''}`}>
+                        <option value=""></option>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Ms">Ms</option>
+                    </select>
+                    <div className="invalid-feedback">{errors.title?.message}</div>
                 </div>
-                <div className="form-group col-6">
-                    <label>Name</label>
-                    <input name="name" type="text" {...register('name')} className={`form-control ${errors.name ? 'is-invalid' : ''}`} />
-                    <div className="invalid-feedback">{errors.name?.message}</div>
+                <div className="form-group col-5">
+                    <label>First Name</label>
+                    <input name="firstName" type="text" {...register('firstName')} className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} />
+                    <div className="invalid-feedback">{errors.firstName?.message}</div>
+                </div>
+                <div className="form-group col-5">
+                    <label>Last Name</label>
+                    <input name="lastName" type="text" {...register('lastName')} className={`form-control ${errors.lastName ? 'is-invalid' : ''}`} />
+                    <div className="invalid-feedback">{errors.lastName?.message}</div>
                 </div>
             </div>
             <div className="form-row">
-                <div className="form-group col-12">
+                <div className="form-group col-7">
                     <label>Email</label>
                     <input name="email" type="text" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} />
                     <div className="invalid-feedback">{errors.email?.message}</div>
+                </div>
+                <div className="form-group col">
+                    <label>Role</label>
+                    <select name="role" {...register('role')} className={`form-control ${errors.role ? 'is-invalid' : ''}`}>
+                        <option value=""></option>
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <div className="invalid-feedback">{errors.role?.message}</div>
                 </div>
             </div>
             {!isAddMode &&
@@ -125,7 +149,7 @@ function AddEdit(props) {
                     Save
                 </button>
                 <button onClick={() => reset(formOptions.defaultValues)} type="button" disabled={formState.isSubmitting} className="btn btn-secondary">Reset</button>
-                <Link href="/postgres" className="btn btn-link">Cancel</Link>
+                <Link href="/json" className="btn btn-link">Cancel</Link>
             </div>
         </form>
     );

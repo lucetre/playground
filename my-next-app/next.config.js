@@ -1,6 +1,13 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    customKey: 'my-value',
-  }
-}
+    FRONTEND_API:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/api"
+        : "https://lucetre.vercel.app/api",
+    BACKEND_API:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:4000/api"
+        : "https://lucetre.herokuapp.com/api",
+  },
+};

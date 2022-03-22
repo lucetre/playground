@@ -1,6 +1,6 @@
 import { fetchWrapper } from "helpers";
 
-export const userService = {
+export const userFrontendService = {
   getAll,
   getById,
   create,
@@ -8,10 +8,7 @@ export const userService = {
   delete: _delete,
 };
 
-const apiUrl =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000/api" // development api
-    : "https://lucetre.vercel.app/api"; // production api
+const apiUrl = process.env.FRONTEND_API;
 
 const baseUrl = `${apiUrl}/users`;
 
@@ -31,7 +28,6 @@ function update(id, params) {
   return fetchWrapper.put(`${baseUrl}/${id}`, params);
 }
 
-// prefixed with underscored because delete is a reserved word in javascript
 function _delete(id) {
   return fetchWrapper.delete(`${baseUrl}/${id}`);
 }

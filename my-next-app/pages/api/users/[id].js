@@ -1,4 +1,4 @@
-import { usersJsonRepo } from "helpers";
+import { usersRepo } from "helpers";
 
 export default handler;
 
@@ -15,13 +15,13 @@ function handler(req, res) {
   }
 
   function getUserById() {
-    const user = usersJsonRepo.getById(req.query.id);
+    const user = usersRepo.getById(req.query.id);
     return res.status(200).json(user);
   }
 
   function updateUser() {
     try {
-      usersJsonRepo.update(req.query.id, req.body);
+      usersRepo.update(req.query.id, req.body);
       return res.status(200).json({});
     } catch (error) {
       return res.status(400).json({ message: error });
@@ -29,7 +29,7 @@ function handler(req, res) {
   }
 
   function deleteUser() {
-    usersJsonRepo.delete(req.query.id);
+    usersRepo.delete(req.query.id);
     return res.status(200).json({});
   }
 }

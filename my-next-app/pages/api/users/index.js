@@ -1,4 +1,4 @@
-import { usersJsonRepo } from "helpers";
+import { usersRepo } from "helpers";
 
 export default handler;
 
@@ -13,13 +13,13 @@ function handler(req, res) {
   }
 
   function getUsers() {
-    const users = usersJsonRepo.getAll();
+    const users = usersRepo.getAll();
     return res.status(200).json(users);
   }
 
   function createUser() {
     try {
-      usersJsonRepo.create(req.body);
+      usersRepo.create(req.body);
       return res.status(200).json({});
     } catch (error) {
       return res.status(400).json({ message: error });

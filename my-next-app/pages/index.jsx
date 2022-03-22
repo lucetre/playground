@@ -7,7 +7,8 @@ const MainPage = (props) => {
     <>
       <h1>This is main page</h1>
       <ul>
-        <li><Link href="/users">User</Link></li>
+        <li><Link href="/postgres">Postgres</Link></li>
+        <li><Link href="/json">JSON</Link></li>
         <li><Link href="/discord">Discord</Link></li>
         <li><Link href="/new">New</Link></li>
       </ul>

@@ -6,6 +6,9 @@ import * as Yup from 'yup';
 
 import { Link } from 'components';
 import { userBackendService, alertService } from 'services';
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient(process.env.BACKEND_SOCKET);
 
 export { AddEdit };
 
@@ -58,6 +61,7 @@ function AddEdit(props) {
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
                 router.push('.');
+                socket.emit('FromClient', new Date().toISOString());
             })
             .catch(alertService.error);
     }
@@ -67,6 +71,7 @@ function AddEdit(props) {
             .then(() => {
                 alertService.success('User updated', { keepAfterRouteChange: true });
                 router.push('..');
+                socket.emit('FromClient', new Date().toISOString());
             })
             .catch(alertService.error);
     }

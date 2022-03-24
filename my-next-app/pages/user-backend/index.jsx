@@ -2,14 +2,24 @@ import { useState, useEffect } from 'react';
 
 import { Link } from 'components';
 import { userBackendService } from 'services';
+import socketIOClient from "socket.io-client";
+
+const socket = socketIOClient(process.env.BACKEND_SOCKET);
 
 export default Index;
 
 function Index() {
     const [users, setUsers] = useState(null);
-
+    const [response, setResponse] = useState(new Date().toISOString());
+    
     useEffect(() => {
         userBackendService.getAll().then(x => setUsers(x));
+    }, [response]);
+    
+    useEffect(() => {
+        socket.on("FromServer", data => {
+            setResponse(data);
+        });
     }, []);
 
     function deleteUser(id) {
@@ -18,6 +28,7 @@ function Index() {
             return x;
         }));
         userBackendService.delete(id).then(() => {
+            socket.emit('FromClient', new Date().toISOString());
             setUsers(users => users.filter(x => x.id !== id));
         });
     }

@@ -9,5 +9,9 @@ module.exports = {
       process.env.NODE_ENV === "development"
         ? "http://localhost:4000/api"
         : "https://lucetre.herokuapp.com/api",
+    BACKEND_SOCKET:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:4000"
+        : "https://lucetre.herokuapp.com",
   },
 };

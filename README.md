@@ -1,5 +1,5 @@
-# blog-vercel
-Practice for vercel deployment
+# Playground
+Practice for frontend deployment
 
 ### How to develop
 1. `npm install`
